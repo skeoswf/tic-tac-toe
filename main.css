@@ -2,3 +2,20 @@ body {
   background-image: url(./background.png);
   background-size: fill;
 }
+
+#game-container {
+  background-color: rgba(255, 0, 0, 0.459);
+  height: 500px;
+  width: 500px;
+  margin: 7vh auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.game-box {
+  height: 160px;
+  width: 160px;
+  background-color: blue;
+}
