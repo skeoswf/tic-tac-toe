@@ -1,5 +1,6 @@
 
 const gameContainer = document.getElementById("game-container");
+// this is the div container holding the grid as a visual representation of a 2d array
 
 const a1 = document.getElementById("a1")
 const a2 = document.getElementById("a2")
@@ -19,31 +20,60 @@ let grid = [
   [[], [], []]
 ];
 
+// maps and stores user and computer inputs
+
+const blankGrid = [
+  [[], [], []],
+  [[], [], []],
+  [[], [], []]
+];
+
+// blank grid for reset games
+
 const idMap = [
   ['a1', 'b1', 'c1'],
   ['a2', 'b2', 'c2'],
   ['a3', 'b3', 'c3']
 ];
 
+// grid with ids to help with manipulating inner htmls
+
 let playerTurn = true;
+
+// while true, the player can select a move
 
 gameContainer.addEventListener('click', (event) => {
   const targetId = event.target.id;
+
   if (playerTurn) {
-    if (targetId === 'a1' && ((grid[0][0]).length === 0)) {
-      grid[0][0].push("X")
-      a1.innerHTML = 'x';
-      (playerTurn = !playerTurn)
-      if (gameCheck() === false) {
-        setTimeout(computerOpponent, 500);
-      } else {
-        // function that resets the board
+    for (let row = 0; row < 3; row++) {
+      for (let col = 0; col < 3; col++) {
+        if (targetId === idMap[row][col] && grid[row][col].length === 0) {
+          // Mark the grid
+          grid[row][col].push("X");
+          document.getElementById(targetId).innerHTML = 'x';
+          playerTurn = !playerTurn;
+
+
+          if (gameCheck() === false) {
+            setTimeout(computerOpponent, 500);
+            if (gameCheck() === false) {
+              playerTurn = !playerTurn;
+              console.log("your turn!");
+            } else {
+              console.log("you suck ass. reset.");
+              grid = blankGrid;
+              playerTurn = !playerTurn;
+            }
+          }
+          return;
+        }
       }
-      console.log(playerTurn)
-      console.log(grid)
     }
   }
-})
+});
+
+
 
 const gameCheck = () => {
   // check for horizontal win 
@@ -101,9 +131,6 @@ document.addEventListener("click", () => {
   console.log(grid)
   console.log(playerTurn)
 })
-
-// so now we have 2 random numbers we can use for row and columns
-// create a function that would take those 2 inputs
 
 // a1.addEventListener("click", () => { console.log("a1 clicked!!") })
 // a2.addEventListener("click", () => { console.log("a2 clicked!!") })
